@@ -18,7 +18,7 @@ public class GUIFrame extends JFrame {
 
     public GUIFrame(){
         setTitle("Таблица");
-        setSize(1600,1024);
+        setSize(1280,720);
         setContentPane(MainPanel);
         setVisible(true);
 
@@ -47,8 +47,13 @@ public class GUIFrame extends JFrame {
 
     private void loadDataFromDatabase() {
         try {
+            // Данные для подключения к базе данных
+            String url      = "jdbc:postgresql://localhost:5432/DB1";
+            String user     = "postgres";
+            String password = "23615797";
+
             // Подключение к базе данных
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DB1", "postgres", "23615797");
+            Connection conn = DriverManager.getConnection(url, user, password);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM l_sost");
 
