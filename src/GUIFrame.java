@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +14,7 @@ public class GUIFrame extends JFrame {
     private JTable table;
     private JScrollPane scrollPane;
     private JButton Change_button;
-    private JButton fire_button;
+    private JButton refresh_button;
     private DefaultTableModel tableModel;
 
     public GUIFrame(){
@@ -25,6 +26,12 @@ public class GUIFrame extends JFrame {
         // Создание модели таблицы
         tableModel = new DefaultTableModel();
         table.setModel(tableModel);
+        table.setDefaultEditor(Object.class, null);
+
+        //Выравнивание текста в таблице по центру
+        DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)table.getDefaultRenderer(String.class);
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+
 
         // Загрузка данных из базы данных
         loadDataFromDatabase();
@@ -33,11 +40,23 @@ public class GUIFrame extends JFrame {
         Add_button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Main.Add_Frame = new Add_Frame();
+            }
+        });
 
+        // Кнопка изменения
+        Change_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Main.Change_Frame = new Change_Frame();
+            }
+        });
 
-
-                Main.GUIFrame.setVisible(false);
-                Main.Add_Frame.setVisible(true);
+        // Кнопка обновления
+        refresh_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            RefreshDataTable();
             }
         });
 
@@ -57,15 +76,6 @@ public class GUIFrame extends JFrame {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM l_sost");
 
-            // Получение информации о столбцах
-            /*
-            int columnCount = rs.getMetaData().getColumnCount();
-            String[] columnNames = new String[columnCount];
-            for (int i = 0; i < columnCount; i++) {
-                columnNames[i] = rs.getMetaData().getColumnName(i + 1);
-            }
-            tableModel.setColumnIdentifiers(columnNames);
-            */
 
             tableModel.addColumn("Подр-е");
             tableModel.addColumn("Таб_№");
@@ -88,6 +98,42 @@ public class GUIFrame extends JFrame {
                 }
                 tableModel.addRow(data);
             }
+
+            // Закрытие соединений
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println("Connection failed...");
+
+            System.out.println(ex);
+        }
+    }
+
+    private void RefreshDataTable() {
+        try {
+            // Данные для подключения к базе данных
+            String url      = "jdbc:postgresql://localhost:5432/DB1";
+            String user     = "postgres";
+            String password = "23615797";
+
+            // Подключение к базе данных
+            Connection conn = DriverManager.getConnection(url, user, password);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM l_sost");
+
+            tableModel.setRowCount(0);
+
+            int columnCount = rs.getMetaData().getColumnCount();
+            // Заполнение данных
+            while (rs.next()) {
+                Object[] data = new Object[columnCount];
+                for (int i = 0; i < columnCount; i++) {
+                    data[i] = rs.getObject(i + 1);
+                }
+                tableModel.addRow(data);
+            }
+
 
             // Закрытие соединений
             rs.close();
