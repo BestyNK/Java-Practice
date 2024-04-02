@@ -3,9 +3,7 @@
 
 <br />
 <div align="center">
-  <img src="./images/1.png" alt="Logo" width="200" height="200">
-  <h1 align="center">OpenDevin: Code Less, Make More</h1>
+  <img src="./images/1.png" alt="Logo" width="1266" height="713">
+  <img src="./images/2.png" alt="Logo" width="1266" height="713">
+  <img src="./images/3.png" alt="Logo" width="786" height="493">
 </div>
-
-![Иллюстрация программы2](https://github.com/BestyNK/Java-Practice/tree/main/images/2.jpg)
-![Иллюстрация программы3](https://github.com/BestyNK/Java-Practice/tree/main/images/3.jpg)
