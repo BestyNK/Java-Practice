@@ -1,5 +1,5 @@
 # Java-Practice
-[https://youtu.be/oNfiX589Q4M](https://youtu.be/xbAjECBveL4)
+[Project Demo Video](https://youtu.be/xbAjECBveL4)
 
 <br />
 <div align="center">
