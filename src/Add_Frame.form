@@ -157,7 +157,7 @@
               </grid>
             </constraints>
             <properties>
-              <text value="Таб № :"/>
+              <text value="Таб № (6-значный):"/>
             </properties>
           </component>
           <component id="1e026" class="javax.swing.JLabel">

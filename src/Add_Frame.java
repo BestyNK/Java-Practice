@@ -89,8 +89,6 @@ public class Add_Frame extends JFrame {
             preparedStatement.setInt(9, Integer.parseInt(setka.getText()));
             preparedStatement.setInt(10, Integer.parseInt(oplat.getText()));
 
-            System.out.println(preparedStatement);
-
             preparedStatement.executeUpdate();
 
 
